@@ -94,7 +94,7 @@
         "description": "The store name where the cert will be deployed in the virtual machine"
       }
     },
-    "certificateThumbprint": {
+    "certificateCommonName": {
       "type": "string",
       "defaultValue": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT",
       "metadata": {
@@ -477,7 +477,7 @@
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
-                      "thumbprint": "[parameters('certificateThumbprint')]",
+                      "commonName": "[parameters('certificateCommonName')]",
                       "x509StoreName": "[parameters('certificateStoreValue')]"
                     }
                   },
@@ -649,9 +649,13 @@
           "DnsService",
           "RepairManager"
         ],
-        "certificate": {
-          "thumbprint": "[parameters('certificateThumbprint')]",
-          "x509StoreName": "[parameters('certificateStoreValue')]"
+        "certificateCommonNames": {
+          "commonNames": [
+            {
+              "certificateCommonName": "[parameters('certificateCommonName')]"
+            }
+          ],
+        "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "clusterState": "Default",
         "diagnosticsStorageAccountConfig": {
@@ -693,9 +697,13 @@
           }
         ],
         "provisioningState": "Default",
-        "reliabilityLevel": "Silver",
-        "reverseProxyCertificate": {
-          "thumbprint": "[parameters('certificateThumbprint')]",
+        "reliabilityLevel": "Bronze",
+        "reverseProxyCertificateCommonNames": {
+          "commonNames": [
+            {
+              "certificateCommonName": "[parameters('certificateCommonName')]"
+            }
+           ],
           "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "upgradeMode": "Automatic",

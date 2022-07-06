@@ -38,8 +38,8 @@
     "certificateStoreValue": {
       "value": "My"
     },
-    "certificateThumbprint": {
-      "value": "GEN-SF-CERT-THUMBPRINT"
+    "certificateCommonName": {
+      "value": "suguitan.com"
     },
     "sourceVaultValue": {
       "value": "GEN-KEYVAULT-RESOURCE-ID"
