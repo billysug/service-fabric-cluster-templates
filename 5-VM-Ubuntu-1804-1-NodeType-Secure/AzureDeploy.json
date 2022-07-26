@@ -472,7 +472,7 @@
                   "settings": {
                     "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                     "nodeTypeRef": "[variables('vmNodeType0Name')]",
-                    "durabilityLevel": "Bronze",
+                    "durabilityLevel": "Silver",
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
