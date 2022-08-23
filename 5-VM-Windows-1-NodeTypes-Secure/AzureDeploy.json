@@ -611,10 +611,7 @@
           },
           "storageProfile": {
             "imageReference": {
-              "publisher": "[parameters('vmImagePublisher')]",
-              "offer": "[parameters('vmImageOffer')]",
-              "sku": "[parameters('vmImageSku')]",
-              "version": "[parameters('vmImageVersion')]"
+              "id": "/subscriptions/13ad2c84-84fa-4798-ad71-e70c07af873f/resourceGroups/SFTestWindows2022WithContainers/providers/Microsoft.Compute/images/Windows2022WithContainers"
             },
             "osDisk": {
               "caching": "ReadOnly",
