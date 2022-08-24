@@ -2,6 +2,14 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "customScriptExtensionFile": {
+      "value": "install-mirantis.ps1 -hypervisolation"
+      //"value": "install-mirantis.ps1 -dockerVersion 18.09.12 -installContainerD"
+      //"value": "install-mirantis.ps1 -dockerVersion 18.09.12 -allowUpgrade"
+    },
+    "customScriptExtensionFileUri": {
+      "value": "https://aka.ms/install-mirantis.ps1"
+    },
     "clusterLocation": {
       "value": "westus"
     },

@@ -460,8 +460,26 @@
           "extensionProfile": {
             "extensions": [
               {
+                "name": "CustomScriptExtension",
+                "properties": {
+                  "publisher": "Microsoft.Compute",
+                  "type": "CustomScriptExtension",
+                  "typeHandlerVersion": "1.10",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "[parameters('customScriptExtensionFileUri')]"
+                    ],
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File .\\', parameters('customScriptExtensionFile'))]"
+                  }
+                }
+              },
+              {
                 "name": "[concat('ServiceFabricNodeVmExt_',variables('vmNodeType0Name'))]",
                 "properties": {
+                  "provisionAfterExtensions": [
+                    "CustomScriptExtension"
+                  ],
                   "type": "ServiceFabricNode",
                   "autoUpgradeMinorVersion": true,
                   "protectedSettings": {
@@ -537,28 +555,28 @@
                 }
               },
               {
-                  "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
-                  "properties": {
-                      "publisher": "Microsoft.Azure.Security",
-                      "type": "IaaSAntimalware",
-                      "typeHandlerVersion": "1.5",
-                      "settings": {
-                         "AntimalwareEnabled": "true",
-                         "Exclusions": {
-                           "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
-                           "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
-                         },
-                         "RealtimeProtectionEnabled": "true",
-                         "ScheduledScanSettings": {
-                           "isEnabled": "true",
-                           "scanType": "Quick",
-                           "day": "7",
-                           "time": "120"
-                         }
-                      },
-                      "protectedSettings": null
-                   }
+                "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+                  "type": "IaaSAntimalware",
+                  "typeHandlerVersion": "1.5",
+                  "settings": {
+                    "AntimalwareEnabled": "true",
+                    "Exclusions": {
+                      "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
+                      "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
+                    },
+                    "RealtimeProtectionEnabled": "true",
+                    "ScheduledScanSettings": {
+                      "isEnabled": "true",
+                      "scanType": "Quick",
+                      "day": "7",
+                      "time": "120"
+                    }
+                  },
+                  "protectedSettings": null
                 }
+              }
             ]
           },
           "networkProfile": {
@@ -655,7 +673,7 @@
               "certificateCommonName": "[parameters('certificateCommonName')]"
             }
           ],
-        "x509StoreName": "[parameters('certificateStoreValue')]"
+          "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "clusterState": "Default",
         "diagnosticsStorageAccountConfig": {
@@ -703,7 +721,7 @@
             {
               "certificateCommonName": "[parameters('certificateCommonName')]"
             }
-           ],
+          ],
           "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "upgradeMode": "Automatic",
