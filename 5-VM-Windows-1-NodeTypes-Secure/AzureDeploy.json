@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "customScriptExtensionFile": {
-      "defaultValue": "install-mirantis.ps1",
+      "defaultValue": "install-mirantis.ps1 -hypervIsolation",
       "type": "string",
       "metadata": {
         "description": "script file name for custom script extension to execute"
