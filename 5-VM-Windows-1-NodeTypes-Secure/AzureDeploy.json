@@ -2,6 +2,20 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "customScriptExtensionFile": {
+      "defaultValue": "install-mirantis.ps1",
+      "type": "string",
+      "metadata": {
+        "description": "script file name for custom script extension to execute"
+      }
+    },
+    "customScriptExtensionFileUri": {
+      "defaultValue": "https://aka.ms/install-mirantis.ps1",
+      "type": "string",
+      "metadata": {
+        "description": "Location of the script file for custom script extension to execute"
+      }
+    },
     "clusterLocation": {
       "type": "string",
       "defaultValue": "westus",
