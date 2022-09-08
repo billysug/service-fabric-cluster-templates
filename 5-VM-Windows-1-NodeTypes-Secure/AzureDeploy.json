@@ -652,7 +652,8 @@
         "certificateCommonNames": {
           "commonNames": [
             {
-              "certificateCommonName": "[parameters('certificateCommonName')]"
+              "certificateCommonName": "[parameters('certificateCommonName')]",
+              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"                    
             }
           ],
         "x509StoreName": "[parameters('certificateStoreValue')]"
