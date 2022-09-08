@@ -159,7 +159,7 @@
       "type": "string",
       "defaultValue": "Standard_D2_V2"
     },
-    "certificateIssuerThumbprint": {
+    "certificateIssuerThumbprintList": {
       "type": "string"      
     }
   },
