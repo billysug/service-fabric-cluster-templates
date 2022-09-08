@@ -158,6 +158,9 @@
     "vmNodeType0Size": {
       "type": "string",
       "defaultValue": "Standard_D2_V2"
+    },
+    "certificateIssuerThumbprint": {
+      "type": "string"      
     }
   },
   "variables": {
