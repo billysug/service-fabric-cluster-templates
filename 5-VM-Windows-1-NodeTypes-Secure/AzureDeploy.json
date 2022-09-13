@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterLocation": {
@@ -96,9 +96,8 @@
     },
     "certificateCommonName": {
       "type": "string",
-      "defaultValue": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT",
       "metadata": {
-        "description": "Certificate Thumbprint"
+        "description": "Certificate Commonname"
       }
     },
     "sourceVaultValue": {
@@ -159,8 +158,11 @@
       "type": "string",
       "defaultValue": "Standard_D2_V2"
     },
-    "certificateIssuerThumbprintList": {
-      "type": "string"      
+    "certificateIssuerThumbprint": {
+      "type": "string",
+      "metadata": {
+        "description": "Certificate Authority Issuer Thumpbrint for Commonname cert"
+      }
     }
   },
   "variables": {
@@ -480,7 +482,9 @@
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
-                      "commonName": "[parameters('certificateCommonName')]",
+                      "commonNames": [
+                        "[parameters('certificateCommonName')]"
+                      ],
                       "x509StoreName": "[parameters('certificateStoreValue')]"
                     }
                   },
@@ -540,28 +544,28 @@
                 }
               },
               {
-                  "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
-                  "properties": {
-                      "publisher": "Microsoft.Azure.Security",
-                      "type": "IaaSAntimalware",
-                      "typeHandlerVersion": "1.5",
-                      "settings": {
-                         "AntimalwareEnabled": "true",
-                         "Exclusions": {
-                           "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
-                           "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
-                         },
-                         "RealtimeProtectionEnabled": "true",
-                         "ScheduledScanSettings": {
-                           "isEnabled": "true",
-                           "scanType": "Quick",
-                           "day": "7",
-                           "time": "120"
-                         }
-                      },
-                      "protectedSettings": null
-                   }
+                "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+                  "type": "IaaSAntimalware",
+                  "typeHandlerVersion": "1.5",
+                  "settings": {
+                    "AntimalwareEnabled": "true",
+                    "Exclusions": {
+                      "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
+                      "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
+                    },
+                    "RealtimeProtectionEnabled": "true",
+                    "ScheduledScanSettings": {
+                      "isEnabled": "true",
+                      "scanType": "Quick",
+                      "day": "7",
+                      "time": "120"
+                    }
+                  },
+                  "protectedSettings": null
                 }
+              }
             ]
           },
           "networkProfile": {
@@ -656,10 +660,10 @@
           "commonNames": [
             {
               "certificateCommonName": "[parameters('certificateCommonName')]",
-              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"                    
+              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]"
             }
           ],
-        "x509StoreName": "[parameters('certificateStoreValue')]"
+          "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "clusterState": "Default",
         "diagnosticsStorageAccountConfig": {
@@ -707,7 +711,7 @@
             {
               "certificateCommonName": "[parameters('certificateCommonName')]"
             }
-           ],
+          ],
           "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "upgradeMode": "Automatic",

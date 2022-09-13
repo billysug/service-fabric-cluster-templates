@@ -61,6 +61,9 @@
     },
     "vmNodeType0Size": {
       "value": "Standard_D2_V2"
+    },
+    "certificateIssuerThumbprint": {
+      "value": "238dd55840c76f75a6f19d8ab39424d5c0bd6e5c"
     }
   }
 }
