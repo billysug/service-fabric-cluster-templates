@@ -2,6 +2,12 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "customScriptExtensionFile": {
+      "value": "Install-Mirantis.ps1 -dockerCe"
+    },
+    "customScriptExtensionFileUri": {
+      "value": "https://raw.githubusercontent.com/Azure/Service-Fabric-Troubleshooting-Guides/master/Scripts/Install-Mirantis.ps1"
+    },
     "clusterLocation": {
       "value": "westus"
     },
@@ -21,7 +27,7 @@
       "value": "WindowsServer"
     },
     "vmImageSku": {
-      "value": "2016-Datacenter-with-Containers"
+      "value": "2022-Datacenter"
     },
     "vmImageVersion": {
       "value": "latest"
@@ -60,7 +66,7 @@
       "value": 5
     },
     "vmNodeType0Size": {
-      "value": "Standard_D2_V2"
+      "value": "Standard_D4_v3"
     }
   }
 }
