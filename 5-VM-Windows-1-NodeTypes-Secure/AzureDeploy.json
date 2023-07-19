@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterLocation": {
@@ -158,6 +158,25 @@
     "vmNodeType0Size": {
       "type": "string",
       "defaultValue": "Standard_D2_V2"
+    },
+    "enableAutomaticOSUpgrade": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Enable automatic OS upgrade for VMSS.  This requires at least silver durability.  https://learn.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-automatic-upgrade"
+      }
+    },
+    "durabilityLevel": {
+      "type": "string",
+      "defaultValue": "Silver",
+      "allowedValues": [
+        "Bronze",
+        "Silver",
+        "Gold"
+      ],
+      "metadata": {
+        "description": "Durability level of the VMSS. Bronze = 1 node, Silver = 3 nodes, Gold = 5 nodes.  https://learn.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity"
+      }
     }
   },
   "variables": {
@@ -202,7 +221,10 @@
     "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
     "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
     "vmNodeType0Name": "[toLower(concat('NT1', variables('vmName')))]",
-    "vmStorageAccountName0": "[toLower(concat(uniqueString(resourceGroup().id), '1', '0' ))]"
+    "vmStorageAccountName0": "[toLower(concat(uniqueString(resourceGroup().id), '1', '0' ))]",
+    "x1": "[or(equals(parameters('durabilityLevel'),'Silver'),equals(parameters('durabilityLevel'),'Gold'))]",
+    "x": "[if(variables('x1'),'true','false')]",
+    "x2": "[if(or(equals(parameters('durabilityLevel'),'Silver'),equals(parameters('durabilityLevel'),'Gold')),true(),false())]"
   },
   "resources": [
     {
@@ -454,7 +476,10 @@
       "properties": {
         "overprovision": "[variables('overProvision')]",
         "upgradePolicy": {
-          "mode": "Automatic"
+          "mode": "Automatic",
+          "automaticOSUpgradePolicy": {
+            "enableAutomaticOSUpgradex": "[parameters('enableAutomaticOSUpgrade')]"
+          }
         },
         "virtualMachineProfile": {
           "extensionProfile": {
@@ -473,7 +498,7 @@
                     "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                     "nodeTypeRef": "[variables('vmNodeType0Name')]",
                     "dataPath": "D:\\SvcFab",
-                    "durabilityLevel": "Bronze",
+                    "durabilityLevel": "[parameters('durabilityLevel')]",
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
@@ -537,28 +562,28 @@
                 }
               },
               {
-                  "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
-                  "properties": {
-                      "publisher": "Microsoft.Azure.Security",
-                      "type": "IaaSAntimalware",
-                      "typeHandlerVersion": "1.5",
-                      "settings": {
-                         "AntimalwareEnabled": "true",
-                         "Exclusions": {
-                           "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
-                           "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
-                         },
-                         "RealtimeProtectionEnabled": "true",
-                         "ScheduledScanSettings": {
-                           "isEnabled": "true",
-                           "scanType": "Quick",
-                           "day": "7",
-                           "time": "120"
-                         }
-                      },
-                      "protectedSettings": null
-                   }
+                "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+                  "type": "IaaSAntimalware",
+                  "typeHandlerVersion": "1.5",
+                  "settings": {
+                    "AntimalwareEnabled": "true",
+                    "Exclusions": {
+                      "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
+                      "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
+                    },
+                    "RealtimeProtectionEnabled": "true",
+                    "ScheduledScanSettings": {
+                      "isEnabled": "true",
+                      "scanType": "Quick",
+                      "day": "7",
+                      "time": "120"
+                    }
+                  },
+                  "protectedSettings": null
                 }
+              }
             ]
           },
           "networkProfile": {
@@ -595,6 +620,7 @@
             "adminPassword": "[parameters('adminPassword')]",
             "adminUsername": "[parameters('adminUsername')]",
             "computernamePrefix": "[variables('vmNodeType0Name')]",
+            "enableAutomaticUpdates": "[not(parameters('enableAutomaticOSUpgrade'))]", 
             "secrets": [
               {
                 "sourceVault": {
@@ -711,6 +737,10 @@
     "clusterProperties": {
       "value": "[reference(parameters('clusterName'))]",
       "type": "object"
-    }
+    },
+    "bestPracticeValidation": {
+      "value": "[reference(parameters('clusterName'))]",
+      "type": "object"
+    
   }
 }
