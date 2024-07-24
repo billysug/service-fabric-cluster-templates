@@ -42,10 +42,10 @@
       "value": "GEN-SF-CERT-THUMBPRINT"
     },
     "sourceVaultValue": {
-      "value": "/subscriptions/59a179a5-73a6-4e75-b2bc-2224010ed408/resourceGroups/billyswestuskv/providers/Microsoft.KeyVault/vaults/billyskva"
+      "value": "GEN-KEYVAULT-RESOURCE-ID"
     },
     "certificateUrlValue": {
-      "value": "https://billyskva.vault.azure.net/secrets/azureisland/1f7e360906ee4f18a4b6df41ab96217e"
+      "value": "GEN-SF-CERT-URL"
     },
     "storageAccountType": {
       "value": "Standard_LRS"
