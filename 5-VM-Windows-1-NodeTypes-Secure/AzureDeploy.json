@@ -1,7 +1,11 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+            "internalLBAddress": {
+            "type": "string",
+            "defaultValue": "10.0.0.250"
+        },
     "clusterLocation": {
       "type": "string",
       "defaultValue": "westus",
@@ -11,14 +15,14 @@
     },
     "clusterName": {
       "type": "string",
-      "defaultValue": "GEN-UNIQUE",
+      "defaultValue": "billys20210114a",
       "metadata": {
         "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only"
       }
     },
     "adminUserName": {
       "type": "string",
-      "defaultValue": "GEN-UNIQUE",
+      "defaultValue": "billys",
       "metadata": {
         "description": "Remote desktop user Id"
       }
@@ -46,7 +50,7 @@
     },
     "vmImageSku": {
       "type": "string",
-      "defaultValue": "2016-Datacenter-with-Containers",
+      "defaultValue": "2019-Datacenter",
       "metadata": {
         "description": "VM image SKU"
       }
@@ -115,6 +119,13 @@
         "description": "Refers to the location URL in your key vault where the certificate was uploaded, it is should be in the format of https://<name of the vault>.vault.azure.net:443/secrets/<exact location>"
       }
     },
+    "certificateUrlValue2": {
+      "type": "string",
+      "defaultValue": "GEN-KEYVAULT-SSL-SECRET-URI",
+      "metadata": {
+        "description": "Refers to the location URL in your key vault where the certificate was uploaded, it is should be in the format of https://<name of the vault>.vault.azure.net:443/secrets/<exact location>"
+      }
+    },
     "storageAccountType": {
       "type": "string",
       "allowedValues": [
@@ -161,6 +172,14 @@
     }
   },
   "variables": {
+    /* Add internal load balancer networking variables */
+        "lbID0-Int": "[resourceId('Microsoft.Network/loadBalancers', concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name'), '-Internal'))]",
+        "lbIPConfig0-Int": "[concat(variables('lbID0-Int'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
+        "lbPoolID0-Int": "[concat(variables('lbID0-Int'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
+        "lbProbeID0-Int": "[concat(variables('lbID0-Int'),'/probes/FabricGatewayProbe')]",
+        "lbHttpProbeID0-Int": "[concat(variables('lbID0-Int'),'/probes/FabricHttpGatewayProbe')]",
+        "lbNatPoolID0-Int": "[concat(variables('lbID0-Int'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
+        /* Internal load balancer networking variables end */
     "computeLocation": "[parameters('clusterLocation')]",
     "dnsName": "[parameters('clusterName')]",
     "vmStorageAccountName": "[toLower(concat( 'sflogs', uniqueString(resourceGroup().id), '1' ))]",
@@ -178,7 +197,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "overProvision": "false",
     "vmssApiVersion": "2018-06-01",
-    "sfrpApiVersion": "2018-02-01",
+    "sfrpApiVersion": "2020-03-01",
     "lbApiVersion": "2018-08-01",
     "vNetApiVersion": "2018-08-01",
     "storageApiVersion": "2018-07-01",
@@ -477,7 +496,11 @@
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
-                      "thumbprint": "[parameters('certificateThumbprint')]",
+                      "commonNames": [
+                        // "azureisland.com",
+                        "azurechicken.com"
+                      ],
+                      // "thumbprint": "[parameters('certificateThumbprint')]",
                       "x509StoreName": "[parameters('certificateStoreValue')]"
                     }
                   },
@@ -537,28 +560,28 @@
                 }
               },
               {
-                  "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
-                  "properties": {
-                      "publisher": "Microsoft.Azure.Security",
-                      "type": "IaaSAntimalware",
-                      "typeHandlerVersion": "1.5",
-                      "settings": {
-                         "AntimalwareEnabled": "true",
-                         "Exclusions": {
-                           "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
-                           "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
-                         },
-                         "RealtimeProtectionEnabled": "true",
-                         "ScheduledScanSettings": {
-                           "isEnabled": "true",
-                           "scanType": "Quick",
-                           "day": "7",
-                           "time": "120"
-                         }
-                      },
-                      "protectedSettings": null
-                   }
+                "name": "[concat('VMIaaSAntimalware_',variables('vmNodeType0Name'))]",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Security",
+                  "type": "IaaSAntimalware",
+                  "typeHandlerVersion": "1.5",
+                  "settings": {
+                    "AntimalwareEnabled": "true",
+                    "Exclusions": {
+                      "Paths": "D:\\SvcFab;D:\\SvcFab\\Log;C:\\Program Files\\Microsoft Service Fabric",
+                      "Processes": "Fabric.exe;FabricHost.exe;FabricInstallerService.exe;FabricSetup.exe;FabricDeployer.exe;ImageBuilder.exe;FabricGateway.exe;FabricDCA.exe;FabricFAS.exe;FabricUOS.exe;FabricRM.exe;FileStoreService.exe"
+                    },
+                    "RealtimeProtectionEnabled": "true",
+                    "ScheduledScanSettings": {
+                      "isEnabled": "true",
+                      "scanType": "Quick",
+                      "day": "7",
+                      "time": "120"
+                    }
+                  },
+                  "protectedSettings": null
                 }
+              }
             ]
           },
           "networkProfile": {
@@ -604,6 +627,10 @@
                   {
                     "certificateStore": "[parameters('certificateStoreValue')]",
                     "certificateUrl": "[parameters('certificateUrlValue')]"
+                  },
+                  {
+                    "certificateStore": "[parameters('certificateStoreValue')]",
+                    "certificateUrl": "[parameters('certificateUrlValue2')]"
                   }
                 ]
               }
@@ -649,8 +676,17 @@
           "DnsService",
           "RepairManager"
         ],
-        "certificate": {
-          "thumbprint": "[parameters('certificateThumbprint')]",
+        "certificateCommonNames": {
+          "commonNames": [
+            // {
+            //   "certificateCommonName": "azureisland.com"
+            // },
+            {
+              "certificateCommonName": "azurechicken.com",
+              "certificateIssuerThumbprint": "2f7aa2d86056a8775796f798c481a079e538e004"
+            }
+          ],
+          //"thumbprint": "[parameters('certificateThumbprint')]",
           "x509StoreName": "[parameters('certificateStoreValue')]"
         },
         "clusterState": "Default",
@@ -670,8 +706,26 @@
               }
             ],
             "name": "Security"
+          },
+          {
+            "name": "EventStoreService",
+            "parameters": [
+              {
+                "name": "TargetReplicaSetSize",
+                "value": "3"
+              },
+              {
+                "name": "MinReplicaSetSize",
+                "value": "1"
+              },
+              {
+                "name": "PlacementConstraints",
+                "value": "(NodeType==nt1vm)"
+              }
+            ]
           }
         ],
+        // "eventStoreServiceEnabled": false,
         "managementEndpoint": "[concat('https://',reference(concat(variables('lbIPName'),'-',variables('vmNodeType0Name'))).dnsSettings.fqdn,':',variables('nt0fabricHttpGatewayPort'))]",
         "nodeTypes": [
           {
@@ -693,7 +747,7 @@
           }
         ],
         "provisioningState": "Default",
-        "reliabilityLevel": "Silver",
+        "reliabilityLevel": "Bronze",
         "reverseProxyCertificate": {
           "thumbprint": "[parameters('certificateThumbprint')]",
           "x509StoreName": "[parameters('certificateStoreValue')]"
