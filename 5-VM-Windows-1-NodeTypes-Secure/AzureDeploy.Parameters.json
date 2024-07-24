@@ -47,9 +47,6 @@
     "certificateUrlValue": {
       "value": "https://billyskva.vault.azure.net/secrets/azureisland/1f7e360906ee4f18a4b6df41ab96217e"
     },
-    "certificateUrlValue2": {
-      "value": "https://billyskva.vault.azure.net/secrets/azurechicken/aebbae744ba64a8e8b9f5135ed0cb4d5"
-    },
     "storageAccountType": {
       "value": "Standard_LRS"
     },
