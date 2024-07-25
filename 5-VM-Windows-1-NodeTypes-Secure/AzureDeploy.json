@@ -491,7 +491,7 @@
                     "certificate": {
                       "commonNames": [
                         // "azureisland.com",
-                        "azurechicken.com"
+                        "suguitan.com"
                       ],
                       // "thumbprint": "[parameters('certificateThumbprint')]",
                       "x509StoreName": "[parameters('certificateStoreValue')]"
@@ -671,7 +671,7 @@
             //   "certificateCommonName": "azureisland.com"
             // },
             {
-              "certificateCommonName": "azurechicken.com",
+              "certificateCommonName": "suguitan.com",
               "certificateIssuerThumbprint": "2f7aa2d86056a8775796f798c481a079e538e004"
             }
           ],
