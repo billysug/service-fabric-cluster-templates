@@ -693,7 +693,7 @@
           }
         ],
         "provisioningState": "Default",
-        "reliabilityLevel": "Silver",
+        "reliabilityLevel": "Bronze",
         "reverseProxyCertificate": {
           "thumbprint": "[parameters('certificateThumbprint')]",
           "x509StoreName": "[parameters('certificateStoreValue')]"
