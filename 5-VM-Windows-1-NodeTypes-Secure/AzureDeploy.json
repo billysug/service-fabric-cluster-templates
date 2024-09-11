@@ -115,6 +115,20 @@
         "description": "Refers to the location URL in your key vault where the certificate was uploaded, it is should be in the format of https://<name of the vault>.vault.azure.net:443/secrets/<exact location>"
       }
     },
+    "appCertificateThumbprint": {
+      "type": "string",
+      "defaultValue": "GEN-APP-CERT-THUMBPRINT",
+      "metadata": {
+        "description": "Application Certificate Thumbprint"
+      }
+    },
+    "appCertificateUrlValue": {
+      "type": "string",
+      "defaultValue": "GEN-APP-CERT-URL",
+      "metadata": {
+        "description": "Application Certificate URL"
+      }
+    },
     "storageAccountType": {
       "type": "string",
       "allowedValues": [
@@ -604,6 +618,10 @@
                   {
                     "certificateStore": "[parameters('certificateStoreValue')]",
                     "certificateUrl": "[parameters('certificateUrlValue')]"
+                  },
+                  {
+                    "certificateStore": "[parameters('certificateStoreValue')]",
+                    "certificateUrl": "[parameters('appCertificateUrlValue')]"
                   }
                 ]
               }

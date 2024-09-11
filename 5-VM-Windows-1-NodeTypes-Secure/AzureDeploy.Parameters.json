@@ -47,6 +47,12 @@
     "certificateUrlValue": {
       "value": "GEN-SF-CERT-URL"
     },
+    "appCertificateThumbprint": {
+      "value": "GEN-APP-CERT-THUMBPRINT"
+    },
+    "appCertificateUrlValue": {
+      "value": "GEN-APP-CERT-URL"
+    },
     "storageAccountType": {
       "value": "Standard_LRS"
     },
