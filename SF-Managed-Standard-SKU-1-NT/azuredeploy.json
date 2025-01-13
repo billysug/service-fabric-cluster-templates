@@ -33,15 +33,15 @@
             "maxLength": 9,
             "defaultValue": "NT1"
         },
-        "nodeTypeVmSize": {
+        "vmSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
         },
-        "nodeTypeVmInstanceCount": {
+        "vmInstanceCount": {
             "type": "int",
             "defaultValue": 5
         },
-        "nodeTypeDataDiskSizeGB": {
+        "dataDiskSizeGB": {
             "type": "int",
             "defaultValue": 256
         },
