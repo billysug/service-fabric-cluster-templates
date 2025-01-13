@@ -28,20 +28,20 @@
         "clientCertificateThumbprint": {
             "type": "string"
         },
-        "nodeType1Name": {
+        "nodeTypeName": {
             "type": "string",
             "maxLength": 9,
             "defaultValue": "NT1"
         },
-        "nodeType1VmSize": {
+        "nodeTypeVmSize": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
         },
-        "nodeType1VmInstanceCount": {
+        "nodeTypeVmInstanceCount": {
             "type": "int",
             "defaultValue": 5
         },
-        "nodeType1DataDiskSizeGB": {
+        "nodeTypeDataDiskSizeGB": {
             "type": "int",
             "defaultValue": 256
         },
@@ -120,8 +120,8 @@
                 "vmImageSku": "[parameters('vmImageSku')]",
                 "vmImageVersion": "[parameters('vmImageVersion')]",
                 "vmSize": "[parameters('nodeType1VmSize')]",
-                "vmInstanceCount": "[parameters('nodeType1VmInstanceCount')]",
-                "dataDiskSizeGB": "[parameters('nodeType1DataDiskSizeGB')]",
+                "vmInstanceCount": "[parameters('nodeTypeVmInstanceCount')]",
+                "dataDiskSizeGB": "[parameters('nodeTypeDataDiskSizeGB')]",
                 "dataDiskType": "[parameters('managedDataDiskType')]"
             }
         }
