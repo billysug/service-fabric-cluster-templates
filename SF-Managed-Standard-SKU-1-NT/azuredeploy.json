@@ -108,7 +108,7 @@
         {
             "apiVersion": "[variables('sfApiVersion')]",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "name": "[concat(parameters('clusterName'), '/', parameters('nodeType1Name'))]",
+            "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "location": "[resourcegroup().location]",
             "dependsOn": [
               "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
@@ -119,7 +119,7 @@
                 "vmImageOffer": "[parameters('vmImageOffer')]",
                 "vmImageSku": "[parameters('vmImageSku')]",
                 "vmImageVersion": "[parameters('vmImageVersion')]",
-                "vmSize": "[parameters('nodeType1VmSize')]",
+                "vmSize": "[parameters('nodeTypeVmSize')]",
                 "vmInstanceCount": "[parameters('nodeTypeVmInstanceCount')]",
                 "dataDiskSizeGB": "[parameters('nodeTypeDataDiskSizeGB')]",
                 "dataDiskType": "[parameters('managedDataDiskType')]"
