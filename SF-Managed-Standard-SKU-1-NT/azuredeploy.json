@@ -85,6 +85,7 @@
             },
             "properties": {
                 "dnsName": "[toLower(parameters('clusterName'))]",
+                "addonFeatures": [ "DnsService" ],
                 "adminUserName": "[parameters('adminUserName')]",
                 "adminPassword": "[parameters('adminPassword')]",
                 "clientConnectionPort": 19000,
