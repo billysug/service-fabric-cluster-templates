@@ -84,6 +84,8 @@
                 "name" : "[parameters('clusterSku')]"
             },
             "properties": {
+                "clusterCodeVersion" : "10.1.2493.9590",
+                "clusterUpgradeMode" : "Manual",
                 "dnsName": "[toLower(parameters('clusterName'))]",
                 "addonFeatures": [ "DnsService" ],
                 "adminUserName": "[parameters('adminUserName')]",
