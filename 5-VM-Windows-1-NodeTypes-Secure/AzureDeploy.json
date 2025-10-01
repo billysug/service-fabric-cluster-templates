@@ -218,7 +218,9 @@
       },
       "tags": {
         "resourceType": "Service Fabric",
-        "clusterName": "[parameters('clusterName')]"
+        "clusterName": "[parameters('clusterName')]",
+        "SecurityControl": "Ignore",
+        "SecurityControl": "Ignore"
       }
     },
     {
@@ -633,7 +635,9 @@
       },
       "tags": {
         "resourceType": "Service Fabric",
-        "clusterName": "[parameters('clusterName')]"
+        "clusterName": "[parameters('clusterName')]",
+        "SecurityControl": "Ignore",
+        "SecurityControl": "Ignore"
       }
     },
     {
@@ -703,7 +707,9 @@
       },
       "tags": {
         "resourceType": "Service Fabric",
-        "clusterName": "[parameters('clusterName')]"
+        "clusterName": "[parameters('clusterName')]",
+        "SecurityControl": "Ignore",
+        "SecurityControl": "Ignore"
       }
     }
   ],
