@@ -246,9 +246,6 @@
       "location": "[variables('computeLocation')]",
       "dependsOn": [],
       "properties": {
-        "natGateway": {
-          "id": "[resourceId('Microsoft.Network/natGateways', 'natGateway')]"
-        },
         "addressSpace": {
           "addressPrefixes": [
             "[variables('addressPrefix')]"
@@ -278,23 +275,6 @@
       },
       "sku": {
         "name": "Basic"
-      }
-    },
-    {
-      "type": "Microsoft.Network/natGateways",
-      "apiVersion": "2023-09-01",
-      "name": "natGateway",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "Standard"
-      },
-      "properties": {
-        "idleTimeoutInMinutes": 4,
-        "publicIpAddresses": [
-          {
-            "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'natGatewayPublicIP')]"
-          }
-        ]
       }
     },
     {
