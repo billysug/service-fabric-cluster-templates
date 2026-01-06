@@ -59,6 +59,9 @@
     "nt0InstanceCount": {
       "value": 5
     },
+    "durabilityLevel": {  
+      "value": "Silver"
+    },
     "vmNodeType0Size": {
       "value": "Standard_D2_V2"
     }

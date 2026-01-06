@@ -155,6 +155,19 @@
         "description": "Instance count for node type"
       }
     },
+    "durabilityLevel": {
+      "type": "string",
+      "allowedValues": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum"
+      ],
+      "defaultValue": "Silver",
+      "metadata": {
+        "description": "Durability level for the node type"
+      }
+    },
     "vmNodeType0Size": {
       "type": "string",
       "defaultValue": "Standard_D2_V2"
@@ -473,7 +486,7 @@
                     "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                     "nodeTypeRef": "[variables('vmNodeType0Name')]",
                     "dataPath": "D:\\SvcFab",
-                    "durabilityLevel": "Bronze",
+                    "durabilityLevel": "[parameters('durabilityLevel')]",
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
@@ -681,7 +694,7 @@
               "startPort": "[variables('nt0applicationStartPort')]"
             },
             "clientConnectionEndpointPort": "[variables('nt0fabricTcpGatewayPort')]",
-            "durabilityLevel": "Bronze",
+            "durabilityLevel": "[parameters('durabilityLevel')]",
             "ephemeralPorts": {
               "endPort": "[variables('nt0ephemeralEndPort')]",
               "startPort": "[variables('nt0ephemeralStartPort')]"
