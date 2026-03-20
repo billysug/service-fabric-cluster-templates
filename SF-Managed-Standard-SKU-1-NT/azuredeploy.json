@@ -84,7 +84,8 @@
                 "name" : "[parameters('clusterSku')]"
             },
             "tags": {
-                "SecurityControl": "Ignore"
+                "SecurityControl": "Ignore",
+                "SFRP.HotswapPublicIP": "true"
             },
             "properties": {
                 "clusterCodeVersion" : "10.1.2493.9590",
@@ -107,6 +108,12 @@
                         "backendPort": 8080,
                         "protocol": "tcp",
                         "probeProtocol": "tcp"
+                    }
+                ],
+                "ipTags": [
+                    {
+                        "ipTagType": "FirstPartyUsage",
+                        "tag": "/PartnerCenterAccountsUXProd"
                     }
                 ]
             }
