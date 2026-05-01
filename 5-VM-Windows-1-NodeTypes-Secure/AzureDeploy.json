@@ -705,7 +705,8 @@
         "reverseProxyCertificateCommonNames": {
           "commonNames": [
             {
-              "certificateCommonName": "[parameters('certificateCommonName')]"
+              "certificateCommonName": "[parameters('certificateCommonName')]",
+              
             }
            ],
           "x509StoreName": "[parameters('certificateStoreValue')]"

@@ -41,6 +41,9 @@
     "certificateCommonName": {
       "value": "suguitan.com"
     },
+    "certificateIssuerThumbprintList": {
+      "value": "GEN-CERT-ISSUER-THUMBPRINT"
+    },
     "sourceVaultValue": {
       "value": "GEN-KEYVAULT-RESOURCE-ID"
     },
