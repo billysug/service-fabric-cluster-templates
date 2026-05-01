@@ -480,7 +480,9 @@
                     "enableParallelJobs": true,
                     "nicPrefixOverride": "[variables('subnet0Prefix')]",
                     "certificate": {
-                      "commonNames": "[parameters('certificateCommonName')]",
+                      "commonNames": [
+                        "[parameters('certificateCommonName')]"
+                      ],
                       "x509StoreName": "[parameters('certificateStoreValue')]"
                     }
                   },
