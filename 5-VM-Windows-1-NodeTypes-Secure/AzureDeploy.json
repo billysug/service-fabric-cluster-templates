@@ -706,7 +706,7 @@
           "commonNames": [
             {
               "certificateCommonName": "[parameters('certificateCommonName')]",
-              
+              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"
             }
            ],
           "x509StoreName": "[parameters('certificateStoreValue')]"
