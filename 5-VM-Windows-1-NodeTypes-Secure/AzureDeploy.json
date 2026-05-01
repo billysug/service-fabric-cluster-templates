@@ -655,8 +655,7 @@
         "certificateCommonNames": {
           "commonNames": [
             {
-              "certificateCommonName": "[parameters('certificateCommonName')]",
-              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"                    
+              "certificateCommonName": "[parameters('certificateCommonName')]"                 
             }
           ],
         "x509StoreName": "[parameters('certificateStoreValue')]"
@@ -705,8 +704,7 @@
         "reverseProxyCertificateCommonNames": {
           "commonNames": [
             {
-              "certificateCommonName": "[parameters('certificateCommonName')]",
-              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"
+              "certificateCommonName": "[parameters('certificateCommonName')]"
             }
            ],
           "x509StoreName": "[parameters('certificateStoreValue')]"
