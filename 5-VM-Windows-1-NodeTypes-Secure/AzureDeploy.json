@@ -663,15 +663,13 @@
           ],
         "x509StoreName": "[parameters('certificateStoreValue')]"
         },
-        "clientCertificateCommonNames": {
-          "commonNames": [
-            {
-              "certificateCommonName": "[parameters('certificateCommonName')]",
-              "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]"
-            }
-          ],
-          "x509StoreName": "[parameters('certificateStoreValue')]"
-        },
+        "clientCertificateCommonNames": [
+          {
+            "certificateCommonName": "[parameters('certificateCommonName')]",
+            "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprintList')]",
+            "isAdmin": true
+          }
+        ],
         "clusterState": "Default",
         "diagnosticsStorageAccountConfig": {
           "blobEndpoint": "[reference(concat('Microsoft.Storage/storageAccounts/', variables('supportLogStorageAccountName')), variables('storageApiVersion')).primaryEndpoints.blob]",
